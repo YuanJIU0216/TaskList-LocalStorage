@@ -2,8 +2,9 @@
 const form = document.getElementById("taskform");
 const tasklist = document.getElementById("tasklist");
 
+//Add EvenListener for the whole form
 form.addEventListener("submit", function (event) {
-    event.preventDefault();
+    event.preventDefault(); //// 阻止点击链接时的默认行为
 
     console.log(form.elements.taskType.value)
 
@@ -19,9 +20,12 @@ form.addEventListener("submit", function (event) {
 
 function displayTask(task) {
     let item = document.createElement("li");
+    // 属性名称为 "data-id", 属性值是 task.id
     item.setAttribute("data-id", task.id);
     item.innerHTML = `<p><strong>${task.name}</strong><br>${task.type}</p>`;
 
+    // 这里的tasklist是DOM元素（ul）
+    // item也是DOM元素（li）
     tasklist.appendChild(item);
 
     // Clear the value of the input once the task has been added to the page
@@ -36,15 +40,18 @@ function displayTask(task) {
     // Listen for when the delete button is clicked
     delButton.addEventListener("click", function (event) {
 
+        // taskList是Array，
+        // here is delete current data from taskList
         taskList.forEach(function (taskArrayElement, taskArrayIndex) {
             if (taskArrayElement.id == item.getAttribute('data-id')) {
-                taskList.splice(taskArrayIndex, 1)
+                taskList.splice(taskArrayIndex, 1) // 将该元素从数组中删除。
             }
         })
 
         // Make sure the deletion worked by logging out the whole array
         console.log(taskList)
 
+        // Here to see on the html and fronted pages
         item.remove(); // Remove the task item from the page when button clicked
         // Because we used 'let' to define the item, this will always delete the right element
 
@@ -107,7 +114,8 @@ function addTask(name, type, rate, time, client) {
         time,
         client
     }
-
+    
+    // 这里的taskList是array
     taskList.push(task);
     displayTask(task);
 
@@ -118,3 +126,6 @@ addTask("Initial Sketches", "Concept Ideation", 50, 5, "Google");
 
 // Log the array to the console.
 console.log(taskList);
+
+// taskList here should for record data in the terminal
+// the li showed in the fronted page are related to item(in displayTask())
